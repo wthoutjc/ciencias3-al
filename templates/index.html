@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FONTAWESOME -->
+    <script src="https://kit.fontawesome.com/d70f14a51a.js" crossorigin="anonymous"></script>
+    <title>Ciencias3</title>
+</head>
+<body>
+    <div class="all">
+        <div class="text">
+            <h3> Analizador Léxico </h3>
+            <br>
+            <h3> Por: </h3>
+            <h4> - </h4>
+            <h4> - Juan Camilo Ramírez Rátiva 20181020089</h4>
+        </div>
+        <div class="app">
+            <form class="form-search" id="formLex">
+                <div class="blue-search"></div>
+                <input type="text" placeholder="Escribe" id="textLex">
+                <button type="submit" id="btnLex"> Analizar <i class="fas fa-brain"></i></i></button>
+            </form>
+            <div class="results">
+                <textarea name="" id="textResults" readonly></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</html>
