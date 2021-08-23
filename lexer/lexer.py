@@ -38,7 +38,6 @@ class Lexer:
     def scan(self):
         line = 1
         while self.cchar():
-            print(self.cchar(),self.curr_idx)
             if self.cchar() == ' ' or self.cchar() == '\t':   #Ignore blanks
                 self.go_on()
                 continue

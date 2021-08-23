@@ -1,3 +1,0 @@
-int abc = 1;
-
-for data in keys:
