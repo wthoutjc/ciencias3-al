@@ -22,6 +22,6 @@ const sendInfo = async (text) => {
     mode: "no-cors",
   };
   const res = await fetch(`${url}`, settings);
-  data = await res.json()
-  data.results.map(lex => $textResults.innerHTML += `${lex}\n`)
+  data = await res.json();
+  data.results.map((lex) => ($textResults.innerHTML += `${lex}\n`));
 };

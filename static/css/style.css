@@ -22,41 +22,29 @@
     margin: 10px;
 }
 .all .app{
-    width: 50%;
+    width: 85%;
     height: 60%;
     background: rgb(85, 86, 145);
     padding: 1.5em;
     border: black 2px solid;
-}
-.all .app .form-search{
     display: flex;
 }
-.all .app .form-search .blue-search{
-    margin-top: 0.86em;
-    display: inline-block;
-    border-radius: 10px 0 0 10px;
-    position: absolute;
-    width: 3%;
-    height: 32.5px;
-    background: rgb(131, 132, 187);
-    z-index: 1000;
-    border-right: none;
-    border-bottom: 0.3px solid black;
-    border-top: 0.3px solid black;
-    border-left: 0.3px solid black;
+.all .app .form-search{
+    width: 50%;
+    height: 92%;
+    padding-top: 1em;
+    box-sizing: border-box;
 }
-.all .app .form-search input{
-    padding-left: 7%;
-    width: 80%;
-    border-radius: 10px 0 0 10px;
-    height: 33px;
-    color: black;
-    margin-top: 1em;
-    border-right: none;
-    border-bottom: 0.3px solid black;
-    border-top: 0.3px solid black;
-    border-left: none;
+.all .app .form-search #textLex{
+    width: 90%;
+    height: 100%;
+    resize: none;
     outline: none;
+    border: none;
+    border-radius: 1em;
+    box-sizing: border-box;
+    padding: 2em;
+    margin-right: 1em;
 }
 .all .app .form-search button{
     margin-top: 1em;
@@ -65,19 +53,16 @@
     font-weight: 100;
     color: white;
     width: 20%;
-    border-radius: 0 10px 10px 0;
+    border-radius:5px;
     background: rgb(131, 132, 187);
-    border-right: 0.3px solid black;
-    border-bottom: 0.3px solid black;
-    border-top: 0.3px solid black;
-    border-left: none;
+    border: 0.3px solid black;
 }
 .all .app .form-search button:hover{
     background: rgb(85, 86, 145);
     transition: .5s;
 }
 .all .app .results{
-    width: 100%;
+    width: 50%;
     height: 92%;
     padding-top: 1em;
     box-sizing: border-box;
