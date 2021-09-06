@@ -1,7 +1,8 @@
 # JAVA Analizador Léxico
 # Construido por:
 # - Juan Camilo Ramírez 
-# - Jhonatan Ruiz
+# - Johnatan Ruiz
+# - Francisco Barrero
 # Universidad Distrital Francisco José de Caldas
 # Ciencias de la Computación III - Bogotá D.C.
 
