@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FONTAWESOME -->
+    <!-- FONTAWESOME -->  
     <script src="https://kit.fontawesome.com/d70f14a51a.js" crossorigin="anonymous"></script>
     <title>Ciencias3</title>
 </head>
@@ -21,15 +21,16 @@
         <div class="app">
             <form class="form-search" id="formLex">
                 <h2>Léxico</h2>
-                <textarea name="" id="textLex" placeholder="Escribe"></textarea>
+                <textarea class="txarea" name="textLex" id="textLex" placeholder="Escribe"></textarea>
                 <button type="submit" id="btnLex"> Analizar <i class="fas fa-brain"></i></i></button>
             </form>
             <div class="results">
                 <h2>Análisis</h2>
-                <textarea name="" id="textResults" readonly></textarea>
+                <textarea class="txarea" name="textResults" id="textResults" readonly></textarea>
             </div>
         </div>
     </div>
+    
 </body>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </html>

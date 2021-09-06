@@ -1,6 +1,6 @@
 import re
-from lexer.token import Token, Real, Number, Boolean
-from lexer.keywords import KEYWORDS
+from lexer.token import Token
+from lexer.keywords import *
 
 
 class Lexer:
@@ -47,7 +47,7 @@ class Lexer:
             elif self.cchar() == '/' and self.nchar() == '/':   #Ignore single-line comments
                 while self.cchar() and self.nchar() != '\n':
                     self.go_on()
-            elif self.cchar() == '/' and self.nchar() == '*':   #Ignore multi-line comments
+            elif self.cchar() and (self.cchar() == '/' and self.nchar() == '*'):   #Ignore multi-line comments
                 while self.cchar() and (self.cchar() != '*' or self.nchar() != '/'):
                     if self.cchar() == '\n':
                         line += 1
@@ -55,84 +55,100 @@ class Lexer:
                     self.go_on()
                 self.go_on()
             elif self.cchar().isalpha():    #Begins with a letter
-                category, value = self.classify_alpha(self.curr_idx)
-                if category == 'BOOL':
-                    self.tokens.append(Boolean(value, line, self.col))
-                else:
-                    self.tokens.append(Token(category, value, line, self.col))
+                col = self.col
+                category, value, symbol = self.classify_alpha(self.curr_idx)
+                self.tokens.append(Token(category, value, symbol, line, col))
             elif self.cchar().isdigit():    #Begins with a number
-                category, value = self.classify_number(self.curr_idx)
-                if category == 'REAL':
-                    self.tokens.append(Real(value, line, self.col))
-                elif category == 'NUMBER':
-                    self.tokens.append(Number(value, line, self.col))
+                col = self.col
+                category, value, symbol = self.classify_number(self.curr_idx)
+                self.tokens.append(Token(category, value, symbol, line, col))
             else:   #Begins with a symbol
-                category, value = self.classify_symbol()
-                self.tokens.append(Token(category, value, line, self.col))
+                col = self.col
+                category, value, symbol = self.classify_symbol(self.curr_idx)
+                self.tokens.append(Token(category, value, symbol, line, col))
             self.go_on()
 
     def classify_alpha(self, begin):
-        while self.nchar().isalpha() or self.nchar().isdigit() or self.nchar() in '_$':
+        while self.cchar() and (self.nchar().isalpha() or self.nchar().isdigit() or self.nchar() in '_$'):
             self.go_on()
         word = self.source[begin:self.next_idx]
-        if word in KEYWORDS:
+        if word in RESERVED:
             if word == 'false' or word == 'true':
-                return 'BOOL', bool(word)
-            return KEYWORDS[word], word
+                return 'Reserved Literal', bool(word), word
+            if word == 'null':
+                return 'Reserved Literal', None, word
+            return 'Reserved', RESERVED[word], word
         else:
-            return 'IDENTIFIER', word
+            return 'Identifier', word, word
     
     def classify_number(self, begin):
         value = 'Unknown'
         category = 'Unknown'
+        word = ''
         if self.cchar() == '0':
             if self.nchar() == '.':
                 self.go_on()
-                while self.nchar().isdigit():
+                while self.cchar() and self.nchar().isdigit():
                     self.go_on()
-                value = float(self.source[begin:self.next_idx])
-                category = 'REAL'
+                word = self.source[begin:self.next_idx]
+                value = float(word)
+                category = 'Literal REAL'
             elif self.nchar() == 'x':
                 self.go_on()
-                while self.nchar().isdigit() or self.nchar() in 'abcdefABCDEF':
+                while self.cchar() and (self.nchar().isdigit() or self.nchar() in 'abcdefABCDEF'):
                     self.go_on()
-                value = int(self.source[begin:self.next_idx], 16)
-                category = 'NUMBER'
+                word = self.source[begin:self.next_idx]
+                value = int(word, 16)
+                category = 'Literal NUMBER'
             elif self.nchar().isdigit():
                 self.go_on()
-                while self.nchar().isdigit():
+                while self.cchar() and self.nchar().isdigit():
                     self.go_on()
-                value = int('0o' + self.source[begin:self.next_idx], 8)
-                category = 'NUMBER'
+                word = self.source[begin:self.next_idx]
+                value = int('0o' + word, 8)
+                category = 'Literal NUMBER'
             else:
                 value = 0
-                category = 'NUMBER'
+                category = 'Literal NUMBER'
         elif self.nchar() == '.':
             self.go_on()
-            while self.nchar().isdigit():
+            while self.cchar() and self.nchar().isdigit():
                 self.go_on()
-            value = float(self.source[begin:self.next_idx])
-            category = 'REAL'
+            word = self.source[begin:self.next_idx]
+            value = float(word)
+            category = 'Literal REAL'
         elif self.nchar().isdigit():
-            while self.nchar().isdigit():
+            while self.cchar() and self.nchar().isdigit():
                 self.go_on()
-            value = int(self.source[begin:self.next_idx])
-            category = 'NUMBER'
+            word = self.source[begin:self.next_idx]
+            value = int(word)
+            category = 'Literal NUMBER'
         else:
-            value = int(self.cchar())
-            category = 'NUMBER'
+            word = self.source[begin:self.next_idx]
+            value = int(word)
+            category = 'Literal NUMBER'
 
-        return category, value
+        return category, value, word
         
 
-    def classify_symbol(self):
+    def classify_symbol(self, begin):
         value = 'Unknown'
         category = 'Unknown'
         key = self.cchar()
-        while (key + self.nchar()) in KEYWORDS and self.cchar():
+        if key in PUNCTUATORS:
+            category = 'Punctuation'
+            value = PUNCTUATORS[key]
+        elif self.cchar() == '"':
+            while self.nchar() != '"' and self.cchar():
+                self.go_on()
+            category = 'Literal String'
+            value = self.source[begin:self.next_idx]
             self.go_on()
-        if key in KEYWORDS:
-            value = key
-            category = KEYWORDS[key]
+        else:
+            while (key + self.nchar()) in OPERATOR and self.cchar():
+                self.go_on()
+        if key in OPERATOR:
+            value = OPERATOR[key][0]
+            category =OPERATOR[key][1]
 
-        return category, value
+        return category, value, self.source[begin:self.next_idx]

@@ -6,6 +6,15 @@
     font-size: 600;
     font-weight: 100;
 }
+
+textarea {
+    background-color: #000;
+    border: 1px solid #000;
+    color: #00ff00;
+    padding: 8px;
+    font-family: courier new;
+}
+
 .all{
     display: flex;
     flex-direction: column;
@@ -24,7 +33,7 @@
     margin: 10px;
 }
 .all .app{
-    width: 85%;
+    width: 92%;
     height: 70%;
     background: rgb(85, 86, 145);
     padding: 1em;
@@ -32,7 +41,7 @@
     display: flex;
 }
 .all .app .form-search{
-    width: 50%;
+    width: 40%;
     height: 92%;
     padding-top: 0.5em;
     box-sizing: border-box;
@@ -44,15 +53,15 @@
     margin-bottom: 1em;
 }
 .all .app .form-search #textLex{
-    width: 90%;
+    width: 95%;
     height: 100%;
     resize: none;
     outline: none;
     border: none;
     border-radius: 1em;
     box-sizing: border-box;
-    padding: 2em;
-    margin-right: 1em;
+    padding: 0.5em;
+    margin-right: 0.5em;
 }
 .all .app .form-search button{
     margin-top: 1em;
@@ -70,7 +79,7 @@
     transition: .5s;
 }
 .all .app .results{
-    width: 50%;
+    width: 60%;
     height: 92%;
     padding-top: 0.5em;
     box-sizing: border-box;
@@ -89,6 +98,7 @@
     border: none;
     border-radius: 1em;
     box-sizing: border-box;
-    padding: 2em;
+    padding: 0.5em;
+    font-size: 1em;
 }
 
